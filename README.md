@@ -29,7 +29,7 @@ func init() {
     LogToFile: true,
     LogFolder: "my-log",
     LogFileName: "mm-dd-yyyy hh_mm_ss",
-    DateFormat: "mm-dd-yyyy hh:mm:ss:,
+    DateFormat: "mm-dd-yyyy hh:mm:ss:",
     InfoPrefix: "-", // "-" still means leave it default. If not set || empty string, It will be empty string
     WarnPrefix: "-",
     ErrorPrefix: "-",
