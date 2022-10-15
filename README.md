@@ -1,7 +1,7 @@
 # go-logger
 My Custom Logger. Uploaded here because I'm lazy to copypasta everywhere. If you wanna use it, please keep in mind that I wrote this with **NO PERFORMANCE ISSUE** in mind.
 ## Usage
-```
+```go
 package main
 
 import (
