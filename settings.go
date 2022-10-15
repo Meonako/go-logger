@@ -60,13 +60,13 @@ var goDateFormat = []string{
 // You can use "mm-dd-yyyy" instead of that "01-02-2006".
 //
 // It will replace one by one so for example "yyyy-mm-dd hh!mm!ss.log" will result in "2006-01-02 15!04!05.log" and then time.Format will take care of it!
-func NewSettings(cfg Config) {
+func NewSettings(cfg *Config) {
 	if cfg.LogFileName != "-" {
-		replace(&cfg.LogFileName, humanDateFormat, goDateFormat)
+		cfg.LogFileName = replace(cfg.LogFileName, humanDateFormat, goDateFormat)
 	}
 
 	if cfg.DateFormat != "-" {
-		replace(&cfg.DateFormat, humanDateFormat, goDateFormat)
+		cfg.DateFormat = replace(cfg.DateFormat, humanDateFormat, goDateFormat)
 	}
 
 	Settings.LogToFile = cfg.LogToFile
@@ -78,6 +78,10 @@ func NewSettings(cfg Config) {
 	Settings.InfoPrefix = checkDefault(cfg.InfoPrefix, Settings.InfoPrefix)
 	Settings.WarnPrefix = checkDefault(cfg.WarnPrefix, Settings.WarnPrefix)
 	Settings.ErrorPrefix = checkDefault(cfg.ErrorPrefix, Settings.ErrorPrefix)
+
+	if Settings.LogToFile {
+		initial()
+	}
 }
 
 // You can actually set these properties directly or NewSettings. But this is for one-liner lover. Pass "-" (hyphen or dash) if you don't want to change value.
@@ -90,7 +94,7 @@ func NewSettings(cfg Config) {
 // 'Prefix' argument is optional, first arg is "InfoPrefix", second arg is "WarnPrefix", third arg is "ErrorPrefix". If not passed, use default.
 func (s *Config) Set(logToFile bool, folderName, fileName, dateFormat string, Prefix ...string) {
 	if fileName != "-" {
-		replace(&fileName, humanDateFormat, goDateFormat)
+		fileName = replace(fileName, humanDateFormat, goDateFormat)
 	}
 
 	Settings.LogToFile = logToFile
@@ -102,17 +106,22 @@ func (s *Config) Set(logToFile bool, folderName, fileName, dateFormat string, Pr
 	Settings.InfoPrefix = Prefix[0]
 	Settings.WarnPrefix = Prefix[1]
 	Settings.ErrorPrefix = Prefix[2]
+
+	if Settings.LogToFile {
+		initial()
+	}
 }
 
-func replace(str *string, old []string, new []string) {
+func replace(str string, old []string, new []string) string {
 	if len(old) != len(new) {
-		return
+		return ""
 	}
 
 	for i := 0; i < len(old); i++ {
-		result := strings.ReplaceAll(*str, old[i], new[i])
-		str = &result
+		str = strings.ReplaceAll(str, old[i], new[i])
 	}
+
+	return str
 }
 
 func checkDefault(str string, def string) string {
