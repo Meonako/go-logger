@@ -26,13 +26,13 @@ func init() {
   
   // Or if you prefer readability
   logger.NewSettings(logger.Config{
-  	LogToFile: true,
-		LogFolder: "my-log",
-		LogFileName: "mm-dd-yyyy hh_mm_ss",
-		DateFormat: "mm-dd-yyyy hh:mm:ss:,
-		InfoPrefix: "-", // "-" still means leave it default. If not set || empty string, It will be empty string
-		WarnPrefix: "-",
-		ErrorPrefix: "-",
+    LogToFile: true,
+    LogFolder: "my-log",
+    LogFileName: "mm-dd-yyyy hh_mm_ss",
+    DateFormat: "mm-dd-yyyy hh:mm:ss:,
+    InfoPrefix: "-", // "-" still means leave it default. If not set || empty string, It will be empty string
+    WarnPrefix: "-",
+    ErrorPrefix: "-",
   })
   
   logger.Init() // This will required when LogToFile = true
@@ -81,16 +81,16 @@ func main() {
 
 ## Default value
 ```go
-var Settings = settings{
-	LogToFile:   true,
-	LogFolder:   "log",
-	LogFileName: "02_01_2006 15-04-05.log",
+var Settings = Config{
+  LogToFile:   true,
+  LogFolder:   "log",
+  LogFileName: "02_01_2006 15-04-05.log",
 
-	DateFormat:  "02/01/2006 15:04:05",
+  DateFormat:  "02/01/2006 15:04:05",
 
-	InfoPrefix:  "[ INFO ]:",
-	WarnPrefix:  "[ WARN ]:",
-	ErrorPrefix: "[ ERROR ]:",
+  InfoPrefix:  "[ INFO ]:",
+  WarnPrefix:  "[ WARN ]:",
+  ErrorPrefix: "[ ERROR ]:",
 }
 ```
 ## License even though no one will use it
