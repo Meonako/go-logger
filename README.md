@@ -35,7 +35,8 @@ func init() {
     ErrorPrefix: "-",
   })
   
-  logger.Init() // This will required when LogToFile = true
+  logger.Init() // This will required when LogToFile = true. 
+  // UPDATE: If you pass "true" to LogToFile whether NewSettings or Settings.Set(true, ...), it will call automatically so you don't have to.
 }
 
 func main() {
