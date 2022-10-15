@@ -14,15 +14,26 @@ import (
 func init() {
   // You can configure here. You can do it in main too but this way it looks cleaner.
   logger.Settings.LogToFile = false // Default = true
-  // Or one liner
-  logger.Settings.Set(true, "go-log", "-", "-", "-", "-") // "-" means leave it default.
+  // Or one liner. Last three is optional
+  logger.Settings.Set(true, "go-log", "-", "-", "info", "warn", "error") // "-" means leave it default.
   
-  // Thru this function, I provide an easy way to name log file.
-  logger.Settings.Set(true, "log", "dd_mm_yyyy hh-mm-ss", "-", "-", "-") // "dd_mm_yyyy hh-mm-ss" will be replace with "02_01_2006 15-04-05"
+  // Thru this function, I provide an easy way to format date.
+  logger.Settings.Set(true, "log", "dd_mm_yyyy hh-mm-ss", "dd/mm/yyyy hh:mm:ss") // "dd_mm_yyyy hh-mm-ss" will be replace with "02_01_2006 15-04-05"
   
   // it replace "dd" with "02", "yyyy" with "2006". so it will work no matter the position or symbol. 
   // but keep in mind tho, file name can't include "/", or something that os don't support ( i.e. ":" on windows )
-  logger.Settings.Set(true, "-", "yyyy-mm-dd mm!ss!hh", "-", "-", "-") // This will work too!
+  logger.Settings.Set(true, "-", "yyyy-mm-dd mm!ss!hh", "yyyy/mm/dd mm:ss:hh") // This will work too!
+  
+  // Or if you prefer readability
+  logger.NewSettings(logger.Config{
+  	LogToFile: true,
+		LogFolder: "my-log",
+		LogFileName: "mm-dd-yyyy hh_mm_ss",
+		DateFormat: "mm-dd-yyyy hh:mm:ss:,
+		InfoPrefix: "-", // "-" still means leave it default. If not set || empty string, It will be empty string
+		WarnPrefix: "-",
+		ErrorPrefix: "-",
+  })
   
   logger.Init() // This will required when LogToFile = true
 }
@@ -74,6 +85,8 @@ var Settings = settings{
 	LogToFile:   true,
 	LogFolder:   "log",
 	LogFileName: "02_01_2006 15-04-05.log",
+
+	DateFormat:  "02/01/2006 15:04:05",
 
 	InfoPrefix:  "[ INFO ]:",
 	WarnPrefix:  "[ WARN ]:",
