@@ -57,9 +57,9 @@ var goDateFormat = []string{
 // Set settings by config struct. Pass "-" (hyphen or dash) if you don't want to change value.
 //
 // For LogFileName and DateFormat, people usually use time-date format for log's filename. I made it a lil bit easier.
-// You can use "mm-dd-yyyy" instead of that "01-02-2006".
+// You can use "{month}-{date}-{year}" instead of that "01-02-2006".
 //
-// It will replace one by one so for example "yyyy-mm-dd hh!mm!ss.log" will result in "2006-01-02 15!04!05.log" and then time.Format will take care of it!
+// It will replace one by one so for example "{year}-{month}-{date} {hour}!{minute}!{second}.log" will result in "2006-01-02 15!04!05.log" and then time.Format will take care of it!
 func NewSettings(cfg *Config) {
 	if cfg.LogFileName != "-" {
 		cfg.LogFileName = replace(cfg.LogFileName, humanDateFormat, goDateFormat)
@@ -87,9 +87,9 @@ func NewSettings(cfg *Config) {
 // You can actually set these properties directly or NewSettings. But this is for one-liner lover. Pass "-" (hyphen or dash) if you don't want to change value.
 //
 // For fileName and dateFormat, people usually use time-date format for log's filename. I made it a lil bit easier.
-// You can use "mm-dd-yyyy" instead of that "01-02-2006".
+// You can use "{month}-{date}-{year}" instead of that "01-02-2006".
 //
-// It will replace one by one so for example "yyyy-mm-dd hh!mm!ss.log" will result in "2006-01-02 15!04!05.log" and then time.Format will take care of it!
+// It will replace one by one so for example "{year}-{month}-{date} {hour}!{minute}!{second}.log" will result in "2006-01-02 15!04!05.log" and then time.Format will take care of it!
 //
 // 'Prefix' argument is optional, first arg is "InfoPrefix", second arg is "WarnPrefix", third arg is "ErrorPrefix". If not passed, use default.
 func (s *Config) Set(logToFile bool, folderName, fileName, dateFormat string, Prefix ...string) {
