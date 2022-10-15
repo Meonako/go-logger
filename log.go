@@ -25,10 +25,10 @@ func Init() {
 
 	var err error
 	if _, err = os.Stat(Settings.LogFolder); os.IsNotExist(err) {
-		err = os.Mkdir("log", 0700)
+		err = os.Mkdir(Settings.LogFolder, 0700)
 		if err != nil {
-			fmt.Println("LOGGER : Can not create dir \"log\". logger module disabled")
-			writeErrorFile("LOGGER : Can not create dir \"log\". logger module disabled")
+			fmt.Println("LOGGER : Can not create dir \"" + Settings.LogFolder + "\". logger module disabled")
+			writeErrorFile("LOGGER : Can not create dir \"" + Settings.LogFolder + "\". logger module disabled")
 			errCount++
 		}
 	}
@@ -50,7 +50,7 @@ func updatePrefix(newPrefix string) {
 		return
 	}
 
-	prefix = time.Now().Format("02/01/2006 15:04:05 ") + newPrefix + " "
+	prefix = time.Now().Format(Settings.DateFormat+" ") + newPrefix + " "
 }
 
 func writeLogFile(text string) {
@@ -71,10 +71,10 @@ func writeErrorFile(text string) {
 
 func println(text string) {
 	fmt.Println(prefix + text)
+
 	if errCount != 0 || !Settings.LogToFile {
 		return
 	}
-
 	writeLogFile(prefix + text)
 }
 
@@ -146,6 +146,7 @@ func WarnIf(err error, text ...string) {
 
 	if len(text) > 0 {
 		Warn(text[0])
+		return
 	}
 
 	Warn(err.Error())
@@ -161,6 +162,7 @@ func WarnIff(err error, format string, v ...any) {
 
 	if len(v) > 0 {
 		Warnf(format, v...)
+		return
 	}
 
 	Warnf(format, err)
