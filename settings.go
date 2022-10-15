@@ -37,21 +37,21 @@ var Settings = Config{
 }
 
 var humanDateFormat = []string{
-	"dd",   // 02
-	"mm",   // 01
-	"yyyy", // 2006
-	"hh",   // 15
-	"mm",   // 04
-	"ss",   // 05
+	"{date}",   // 02
+	"{month}",  // 01
+	"{year}",   // 2006
+	"{hour}",   // 15
+	"{minute}", // 04
+	"{second}", // 05
 }
 
 var goDateFormat = []string{
-	"02",   // dd
-	"01",   // mm
-	"2006", // yyyy
-	"15",   // hh
-	"04",   // mm
-	"05",   // ss
+	"02",   // date
+	"01",   // month
+	"2006", // year
+	"15",   // hour
+	"04",   // minute
+	"05",   // second
 }
 
 // Set settings by config struct. Pass "-" (hyphen or dash) if you don't want to change value.
@@ -80,7 +80,7 @@ func NewSettings(cfg *Config) {
 	Settings.ErrorPrefix = checkDefault(cfg.ErrorPrefix, Settings.ErrorPrefix)
 
 	if Settings.LogToFile {
-		initial()
+		Init()
 	}
 }
 
@@ -97,6 +97,10 @@ func (s *Config) Set(logToFile bool, folderName, fileName, dateFormat string, Pr
 		fileName = replace(fileName, humanDateFormat, goDateFormat)
 	}
 
+	if dateFormat != "-" {
+		dateFormat = replace(dateFormat, humanDateFormat, goDateFormat)
+	}
+
 	Settings.LogToFile = logToFile
 	Settings.LogFolder = checkDefault(folderName, Settings.LogFolder)
 	Settings.LogFileName = checkDefault(fileName, Settings.LogFileName)
@@ -108,7 +112,7 @@ func (s *Config) Set(logToFile bool, folderName, fileName, dateFormat string, Pr
 	Settings.ErrorPrefix = Prefix[2]
 
 	if Settings.LogToFile {
-		initial()
+		Init()
 	}
 }
 
