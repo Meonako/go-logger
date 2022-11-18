@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Meonako/go-logger/utils"
+	"github.com/Meonako/go-logger/v2/utils"
 
 	"github.com/fatih/color"
 )
